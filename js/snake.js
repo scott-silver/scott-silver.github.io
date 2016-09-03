@@ -1,10 +1,7 @@
-DIRECTION_NORTH = 'n';
-DIRECTION_EAST = 'e';
-DIRECTION_SOUTH = 's';
-DIRECTION_WEST = 'w';
+var Directions = require('./directions.js');
 
 var Snake = function() {
-  this.direction = DIRECTION_NORTH;
+  this.direction = Directions.NORTH;
   this.coordinates = [
     {x: 0, y: 2, color: 'grey'},
     {x: 0, y: 1, color: 'grey'},
@@ -21,19 +18,19 @@ Snake.prototype.advance = function() {
   var newCoordinate = {};
   newCoordinate.color = 'grey'
   switch (this.direction) {
-    case DIRECTION_NORTH:
+    case Directions.NORTH:
       newCoordinate.x = lastCoordinate.x;
       newCoordinate.y = lastCoordinate.y + 1;
       break;
-    case DIRECTION_EAST:
+    case Directions.EAST:
       newCoordinate.x = lastCoordinate.x + 1;
       newCoordinate.y = lastCoordinate.y;
       break;
-    case DIRECTION_SOUTH:
+    case Directions.SOUTH:
       newCoordinate.x = lastCoordinate.x;
       newCoordinate.y = lastCoordinate.y - 1;
       break;
-    case DIRECTION_WEST:
+    case Directions.WEST:
       newCoordinate.x = lastCoordinate.x - 1;
       newCoordinate.y = lastCoordinate.y;
       break;

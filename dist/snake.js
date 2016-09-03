@@ -54,8 +54,17 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
 module.exports = Board;
 
 },{}],2:[function(require,module,exports){
+module.exports = {
+  NORTH: 'n',
+  EAST: 'e',
+  SOUTH: 's',
+  WEST: 'w'
+}
+
+},{}],3:[function(require,module,exports){
 var Board = require('./board.js');
 var Snake = require('./snake.js');
+var Directions = require('./directions.js');
 
 STEP_INTERVAL = 100;
 
@@ -77,19 +86,19 @@ SnakeGame.prototype.addEventListeners = function() {
     switch (event.keyCode) {
       case 37:
         event.preventDefault();
-        this.snake.changeDirection('w');
+        this.snake.changeDirection(Directions.WEST);
         break;
       case 38:
         event.preventDefault();
-        this.snake.changeDirection('n');
+        this.snake.changeDirection(Directions.NORTH);
         break;
       case 39:
         event.preventDefault();
-        this.snake.changeDirection('e');
+        this.snake.changeDirection(Directions.EAST);
         break;
       case 40:
         event.preventDefault();
-        this.snake.changeDirection('s');
+        this.snake.changeDirection(Directions.SOUTH);
         break;
     }
   }.bind(this));
@@ -117,14 +126,11 @@ SnakeGame.prototype.renderBoardItems = function() {
   this.board.render(this.snake);
 }
 
-},{"./board.js":1,"./snake.js":3}],3:[function(require,module,exports){
-DIRECTION_NORTH = 'n';
-DIRECTION_EAST = 'e';
-DIRECTION_SOUTH = 's';
-DIRECTION_WEST = 'w';
+},{"./board.js":1,"./directions.js":2,"./snake.js":4}],4:[function(require,module,exports){
+var Directions = require('./directions.js');
 
 var Snake = function() {
-  this.direction = DIRECTION_NORTH;
+  this.direction = Directions.NORTH;
   this.coordinates = [
     {x: 0, y: 2, color: 'grey'},
     {x: 0, y: 1, color: 'grey'},
@@ -141,19 +147,19 @@ Snake.prototype.advance = function() {
   var newCoordinate = {};
   newCoordinate.color = 'grey'
   switch (this.direction) {
-    case DIRECTION_NORTH:
+    case Directions.NORTH:
       newCoordinate.x = lastCoordinate.x;
       newCoordinate.y = lastCoordinate.y + 1;
       break;
-    case DIRECTION_EAST:
+    case Directions.EAST:
       newCoordinate.x = lastCoordinate.x + 1;
       newCoordinate.y = lastCoordinate.y;
       break;
-    case DIRECTION_SOUTH:
+    case Directions.SOUTH:
       newCoordinate.x = lastCoordinate.x;
       newCoordinate.y = lastCoordinate.y - 1;
       break;
-    case DIRECTION_WEST:
+    case Directions.WEST:
       newCoordinate.x = lastCoordinate.x - 1;
       newCoordinate.y = lastCoordinate.y;
       break;
@@ -164,4 +170,4 @@ Snake.prototype.advance = function() {
 
 module.exports = Snake;
 
-},{}]},{},[2]);
+},{"./directions.js":2}]},{},[3]);

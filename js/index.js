@@ -1,5 +1,6 @@
 var Board = require('./board.js');
 var Snake = require('./snake.js');
+var Directions = require('./directions.js');
 
 STEP_INTERVAL = 100;
 
@@ -21,19 +22,19 @@ SnakeGame.prototype.addEventListeners = function() {
     switch (event.keyCode) {
       case 37:
         event.preventDefault();
-        this.snake.changeDirection('w');
+        this.snake.changeDirection(Directions.WEST);
         break;
       case 38:
         event.preventDefault();
-        this.snake.changeDirection('n');
+        this.snake.changeDirection(Directions.NORTH);
         break;
       case 39:
         event.preventDefault();
-        this.snake.changeDirection('e');
+        this.snake.changeDirection(Directions.EAST);
         break;
       case 40:
         event.preventDefault();
-        this.snake.changeDirection('s');
+        this.snake.changeDirection(Directions.SOUTH);
         break;
     }
   }.bind(this));
