@@ -3,13 +3,15 @@
 <head>
   <title>Scott Silver</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css"></link>
+  <link rel="stylesheet" type="text/css" href="css/snake.css"></link>
   <link href='http://fonts.googleapis.com/css?family=Oswald:400,700'
         rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700'
         rel='stylesheet' type='text/css'>
+  <script src="dist/snake.js" type="text/javascript"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="container text-center">
     <h1 class="text-center">Scott Silver</h1>
     <p class="text-center">
       Rails + Javascript Developer
@@ -17,17 +19,23 @@
       <a target="_blank" class="anchor"
          href="http://www.linkedin.com/pub/scott-silver/86/47b/3b7/">LinkedIn</a>
     </p>
-
-    <div class="board">
+    <div id="snake" class="snake">
     </div>
 
     <h2 class="section-header">
       Skills
     </h2>
+
     <p class="text-center center-block">
       Ruby, Rails, JavaScript, Backbone, Underscore, SQL, PostgreSQL, RSpec, Git, HTML5, CSS3,
       Ajax, Responsive Design
     </p>
   </div>
+
+  <script>
+    var snakeDiv = document.getElementById('snake');
+    var snakeGame = new SnakeGame(snakeDiv);
+     snakeGame.setup();
+  </script>
 </body>
 </html>

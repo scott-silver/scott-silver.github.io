@@ -1,0 +1,59 @@
+.clear-fix {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.snake {
+  display: block;
+  margin: 0 auto;
+  max-width: 500px;
+  border: 1px solid pink;
+}
+
+.row {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.tile {
+  float: left;
+  height:8px;
+  width:8px;
+  border:1px solid rgb(238, 238, 238);
+}
+
+.tile--grey {
+  background-color: grey;
+}
+
+/*
+.row {
+  height: 10px;
+  display: table;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.tile {
+  display: table-cell;
+  border: 1px solid red;
+}
+*/
+
+.start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 40px;
+  margin-left: -50px;
+  margin-top: -20px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid #ece7e7;
+  cursor: pointer;
+}
