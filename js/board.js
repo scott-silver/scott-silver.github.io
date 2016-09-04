@@ -4,18 +4,22 @@ TILE_GREY_CLASS = 'tile--grey';
 var Board = function(options) {
   this.dimension = 50;
   this.element = options.element;
+  this.tiles = [];
 }
 
 Board.prototype.build = function() {
   for (var i = 0; i < this.dimension; i++) {
     var row = document.createElement('div');
     row.classList.add('row');
+    var rowArray = [];
     for (var j = 0; j < this.dimension; j++) {
       var tile = document.createElement('div');
       tile.classList.add(TILE_CLASS);
       row.appendChild(tile);
+      rowArray.push(tile);
     }
     this.element.appendChild(row);
+    this.tiles.unshift(rowArray);
   }
 }
 
@@ -46,8 +50,7 @@ Board.prototype.render = function(renderableObject) {
 }
 
 Board.prototype.addClassToCoordinate = function(x, y, className) {
-  var elementIndex = (this.dimension * ((this.dimension) - y)) - (this.dimension - x);
-  document.getElementsByClassName(TILE_CLASS)[elementIndex].classList.add(className);
+  this.tiles[y][x].classList.add(className);
 }
 
 module.exports = Board;
