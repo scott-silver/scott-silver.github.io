@@ -25,8 +25,10 @@ Board.prototype.build = function() {
 }
 
 Board.prototype.clear = function() {
-  var tiles = document.getElementsByClassName(TILE_GREY_CLASS);
-  console.log(tiles.length);
+  // js array flattening: http://stackoverflow.com/a/10865042
+  var tiles = [].concat.apply([], this.tiles).filter(function(tile) {
+    return tile.classList.contains(TILE_GREY_CLASS);
+  });
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.remove(TILE_GREY_CLASS);
   }
