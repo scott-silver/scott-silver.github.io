@@ -143,10 +143,16 @@ Snake.prototype.changeDirection = function(direction) {
 }
 
 Snake.prototype.advance = function() {
+  var newCoordinate = this.newCoordinateForDirection(this.direction);
+  newCoordinate.color = 'grey'
+  this.coordinates.unshift(newCoordinate);
+  this.coordinates.pop();
+}
+
+Snake.prototype.newCoordinateForDirection = function(direction) {
   var lastCoordinate = this.coordinates[0];
   var newCoordinate = {};
-  newCoordinate.color = 'grey'
-  switch (this.direction) {
+  switch (direction) {
     case Directions.NORTH:
       newCoordinate.x = lastCoordinate.x;
       newCoordinate.y = lastCoordinate.y + 1;
@@ -164,8 +170,7 @@ Snake.prototype.advance = function() {
       newCoordinate.y = lastCoordinate.y;
       break;
   }
-  this.coordinates.unshift(newCoordinate);
-  this.coordinates.pop();
+  return newCoordinate;
 }
 
 module.exports = Snake;
