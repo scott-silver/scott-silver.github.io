@@ -3,6 +3,7 @@ var Directions = require('./directions.js');
 var Snake = function() {
   this.direction = Directions.NORTH;
   this.coordinates = [
+    {x: 0, y: 3, color: 'black'},
     {x: 0, y: 2, color: 'grey'},
     {x: 0, y: 1, color: 'grey'},
     {x: 0, y: 0, color: 'grey'}
@@ -14,8 +15,9 @@ Snake.prototype.changeDirection = function(direction) {
 }
 
 Snake.prototype.advance = function(maxIndex) {
+  this.coordinates[0].color = 'grey';
   var proposedCoordinate = this.newCoordinateForDirection(this.direction);
-  proposedCoordinate.color = 'grey'
+  proposedCoordinate.color = 'black'
   var wrappedCoordinate = this.wrapCoordinateToBoardDimensions(proposedCoordinate, maxIndex);
   this.coordinates.unshift(wrappedCoordinate);
   this.coordinates.pop();

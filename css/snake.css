@@ -28,6 +28,9 @@
   background-color: grey;
 }
 
+.tile--black {
+  background-color: #5d5d5d;
+}
 /*
 .row {
   height: 10px;

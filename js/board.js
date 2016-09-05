@@ -1,5 +1,6 @@
 TILE_CLASS = 'tile';
 TILE_GREY_CLASS = 'tile--grey';
+TILE_BLACK_CLASS = 'tile--black';
 
 var Board = function(options) {
   this.dimension = 50;
@@ -26,10 +27,11 @@ Board.prototype.build = function() {
 Board.prototype.clear = function() {
   // js array flattening: http://stackoverflow.com/a/10865042
   var tiles = [].concat.apply([], this.tiles).filter(function(tile) {
-    return tile.classList.contains(TILE_GREY_CLASS);
+    return tile.classList.contains(TILE_GREY_CLASS) || tile.classList.contains(TILE_BLACK_CLASS);
   });
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.remove(TILE_GREY_CLASS);
+    tiles[i].classList.remove(TILE_BLACK_CLASS);
   }
 }
 

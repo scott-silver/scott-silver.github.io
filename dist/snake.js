@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 TILE_CLASS = 'tile';
 TILE_GREY_CLASS = 'tile--grey';
+TILE_BLACK_CLASS = 'tile--black';
 
 var Board = function(options) {
   this.dimension = 50;
@@ -27,10 +28,11 @@ Board.prototype.build = function() {
 Board.prototype.clear = function() {
   // js array flattening: http://stackoverflow.com/a/10865042
   var tiles = [].concat.apply([], this.tiles).filter(function(tile) {
-    return tile.classList.contains(TILE_GREY_CLASS);
+    return tile.classList.contains(TILE_GREY_CLASS) || tile.classList.contains(TILE_BLACK_CLASS);
   });
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.remove(TILE_GREY_CLASS);
+    tiles[i].classList.remove(TILE_BLACK_CLASS);
   }
 }
 
@@ -138,6 +140,7 @@ var Directions = require('./directions.js');
 var Snake = function() {
   this.direction = Directions.NORTH;
   this.coordinates = [
+    {x: 0, y: 3, color: 'black'},
     {x: 0, y: 2, color: 'grey'},
     {x: 0, y: 1, color: 'grey'},
     {x: 0, y: 0, color: 'grey'}
@@ -149,8 +152,9 @@ Snake.prototype.changeDirection = function(direction) {
 }
 
 Snake.prototype.advance = function(maxIndex) {
+  this.coordinates[0].color = 'grey';
   var proposedCoordinate = this.newCoordinateForDirection(this.direction);
-  proposedCoordinate.color = 'grey'
+  proposedCoordinate.color = 'black'
   var wrappedCoordinate = this.wrapCoordinateToBoardDimensions(proposedCoordinate, maxIndex);
   this.coordinates.unshift(wrappedCoordinate);
   this.coordinates.pop();
