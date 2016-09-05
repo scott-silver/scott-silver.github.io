@@ -2,7 +2,7 @@ var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
 
-STEP_INTERVAL = 100;
+STEP_INTERVAL = 70;
 
 window.SnakeGame = function(element) {
   this.board = new Board({
@@ -55,7 +55,8 @@ SnakeGame.prototype.step = function() {
 }
 
 SnakeGame.prototype.advanceBoardItems = function() {
-  this.snake.advance();
+  var maxIndex = this.board.dimension - 1;
+  this.snake.advance(maxIndex);
 }
 
 SnakeGame.prototype.renderBoardItems = function() {

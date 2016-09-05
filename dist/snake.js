@@ -71,7 +71,7 @@ var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
 
-STEP_INTERVAL = 100;
+STEP_INTERVAL = 70;
 
 window.SnakeGame = function(element) {
   this.board = new Board({
@@ -124,7 +124,8 @@ SnakeGame.prototype.step = function() {
 }
 
 SnakeGame.prototype.advanceBoardItems = function() {
-  this.snake.advance();
+  var maxIndex = this.board.dimension - 1;
+  this.snake.advance(maxIndex);
 }
 
 SnakeGame.prototype.renderBoardItems = function() {
@@ -147,10 +148,11 @@ Snake.prototype.changeDirection = function(direction) {
   this.direction = direction;
 }
 
-Snake.prototype.advance = function() {
-  var newCoordinate = this.newCoordinateForDirection(this.direction);
-  newCoordinate.color = 'grey'
-  this.coordinates.unshift(newCoordinate);
+Snake.prototype.advance = function(maxIndex) {
+  var proposedCoordinate = this.newCoordinateForDirection(this.direction);
+  proposedCoordinate.color = 'grey'
+  var wrappedCoordinate = this.wrapCoordinateToBoardDimensions(proposedCoordinate, maxIndex);
+  this.coordinates.unshift(wrappedCoordinate);
   this.coordinates.pop();
 }
 
@@ -176,6 +178,22 @@ Snake.prototype.newCoordinateForDirection = function(direction) {
       break;
   }
   return newCoordinate;
+}
+
+Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex) {
+  if (coordinate.x > maxIndex) {
+    coordinate.x = 0;
+  }
+  if (coordinate.x < 0) {
+    coordinate.x = maxIndex;
+  }
+  if (coordinate.y > maxIndex) {
+    coordinate.y = 0;
+  }
+  if (coordinate.y < 0) {
+    coordinate.y = maxIndex;
+  }
+  return coordinate;
 }
 
 module.exports = Snake;

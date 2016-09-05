@@ -13,10 +13,11 @@ Snake.prototype.changeDirection = function(direction) {
   this.direction = direction;
 }
 
-Snake.prototype.advance = function() {
-  var newCoordinate = this.newCoordinateForDirection(this.direction);
-  newCoordinate.color = 'grey'
-  this.coordinates.unshift(newCoordinate);
+Snake.prototype.advance = function(maxIndex) {
+  var proposedCoordinate = this.newCoordinateForDirection(this.direction);
+  proposedCoordinate.color = 'grey'
+  var wrappedCoordinate = this.wrapCoordinateToBoardDimensions(proposedCoordinate, maxIndex);
+  this.coordinates.unshift(wrappedCoordinate);
   this.coordinates.pop();
 }
 
@@ -42,6 +43,22 @@ Snake.prototype.newCoordinateForDirection = function(direction) {
       break;
   }
   return newCoordinate;
+}
+
+Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex) {
+  if (coordinate.x > maxIndex) {
+    coordinate.x = 0;
+  }
+  if (coordinate.x < 0) {
+    coordinate.x = maxIndex;
+  }
+  if (coordinate.y > maxIndex) {
+    coordinate.y = 0;
+  }
+  if (coordinate.y < 0) {
+    coordinate.y = maxIndex;
+  }
+  return coordinate;
 }
 
 module.exports = Snake;
