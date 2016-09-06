@@ -1,9 +1,13 @@
-var AppleCollection = function() {
-  this.coordinates = [
-    { x: 10, y: 10, color: 'red' },
-    { x: 15, y: 15, color: 'red' },
-    { x: 20, y: 20, color: 'red' }
-  ];
+function randomNumberBelow(max) {
+  return Math.floor(Math.random() * max);
+}
+
+COLLECTION_LENGTH = 5;
+
+var AppleCollection = function(options) {
+  this.maxIndex = options.maxIndex;
+  this.coordinates = [];
+  this.generateRandomApples();
 }
 
 AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
@@ -14,6 +18,23 @@ AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
 
 AppleCollection.prototype.removeApple = function(apple) {
   this.coordinates.splice(this.coordinates.indexOf(apple), 1);
+}
+
+AppleCollection.prototype.generateRandomApples = function() {
+  while (this.coordinates.length < COLLECTION_LENGTH) {
+    var randomApple = this.generateRandomApple();
+    if (!this.appleAtCoordinate(randomApple)) {
+      this.coordinates.push(randomApple);
+    }
+  }
+}
+
+AppleCollection.prototype.generateRandomApple = function() {
+  return {
+    x: randomNumberBelow(this.maxIndex),
+    y: randomNumberBelow(this.maxIndex),
+    color: 'red'
+  }
 }
 
 module.exports = AppleCollection;

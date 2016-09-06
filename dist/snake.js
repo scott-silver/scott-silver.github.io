@@ -1,10 +1,14 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var AppleCollection = function() {
-  this.coordinates = [
-    { x: 10, y: 10, color: 'red' },
-    { x: 15, y: 15, color: 'red' },
-    { x: 20, y: 20, color: 'red' }
-  ];
+function randomNumberBelow(max) {
+  return Math.floor(Math.random() * max);
+}
+
+COLLECTION_LENGTH = 5;
+
+var AppleCollection = function(options) {
+  this.maxIndex = options.maxIndex;
+  this.coordinates = [];
+  this.generateRandomApples();
 }
 
 AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
@@ -15,6 +19,23 @@ AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
 
 AppleCollection.prototype.removeApple = function(apple) {
   this.coordinates.splice(this.coordinates.indexOf(apple), 1);
+}
+
+AppleCollection.prototype.generateRandomApples = function() {
+  while (this.coordinates.length < COLLECTION_LENGTH) {
+    var randomApple = this.generateRandomApple();
+    if (!this.appleAtCoordinate(randomApple)) {
+      this.coordinates.push(randomApple);
+    }
+  }
+}
+
+AppleCollection.prototype.generateRandomApple = function() {
+  return {
+    x: randomNumberBelow(this.maxIndex),
+    y: randomNumberBelow(this.maxIndex),
+    color: 'red'
+  }
 }
 
 module.exports = AppleCollection;
@@ -101,13 +122,16 @@ var Directions = require('./directions.js');
 var AppleCollection = require('./apple-collection.js');
 
 STEP_INTERVAL = 70;
+BOARD_DIMENSION = 50;
 
 window.SnakeGame = function(element) {
   this.board = new Board({
     element: element
   });
   this.snake = new Snake();
-  this.appleCollection = new AppleCollection();
+  this.appleCollection = new AppleCollection({
+    maxIndex: BOARD_DIMENSION - 1
+  });
 }
 
 SnakeGame.prototype.setup = function() {
@@ -152,6 +176,9 @@ SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
   this.checkForCollisions();
+  if (this.appleCollection.coordinates.length == 0) {
+    this.appleCollection.generateRandomApples();
+  }
   this.renderBoardItems();
 }
 

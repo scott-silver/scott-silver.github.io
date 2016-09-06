@@ -4,13 +4,16 @@ var Directions = require('./directions.js');
 var AppleCollection = require('./apple-collection.js');
 
 STEP_INTERVAL = 70;
+BOARD_DIMENSION = 50;
 
 window.SnakeGame = function(element) {
   this.board = new Board({
     element: element
   });
   this.snake = new Snake();
-  this.appleCollection = new AppleCollection();
+  this.appleCollection = new AppleCollection({
+    maxIndex: BOARD_DIMENSION - 1
+  });
 }
 
 SnakeGame.prototype.setup = function() {
@@ -55,6 +58,9 @@ SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
   this.checkForCollisions();
+  if (this.appleCollection.coordinates.length == 0) {
+    this.appleCollection.generateRandomApples();
+  }
   this.renderBoardItems();
 }
 
