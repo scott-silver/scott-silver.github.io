@@ -1,7 +1,37 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var AppleCollection = function() {
+  this.coordinates = [
+    {
+      x: 10,
+      y: 10,
+      color: 'red'
+    },
+    {
+      x: 15,
+      y: 15,
+      color: 'red'
+    },
+    {
+      x: 20,
+      y: 20,
+      color: 'red'
+    }
+  ];
+}
+
+AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
+  return this.coordinates.some(function(appleCoordinate) {
+    return appleCoordinate.x == coordinate.x && appleCoordinate.y == coordinate.y;
+  });
+}
+
+module.exports = AppleCollection;
+
+},{}],2:[function(require,module,exports){
 TILE_CLASS = 'tile';
 TILE_GREY_CLASS = 'tile--grey';
 TILE_BLACK_CLASS = 'tile--black';
+TILE_RED_CLASS = 'tile--red';
 
 var Board = function(options) {
   this.dimension = 50;
@@ -60,7 +90,7 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
 
 module.exports = Board;
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 module.exports = {
   NORTH: 'n',
   EAST: 'e',
@@ -68,10 +98,11 @@ module.exports = {
   WEST: 'w'
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
+var AppleCollection = require('./apple-collection.js');
 
 STEP_INTERVAL = 70;
 
@@ -80,6 +111,7 @@ window.SnakeGame = function(element) {
     element: element
   });
   this.snake = new Snake();
+  this.appleCollection = new AppleCollection();
 }
 
 SnakeGame.prototype.setup = function() {
@@ -122,6 +154,7 @@ SnakeGame.prototype.start = function() {
 SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
+  this.checkForCollisions();
   this.renderBoardItems();
 }
 
@@ -130,11 +163,19 @@ SnakeGame.prototype.advanceBoardItems = function() {
   this.snake.advance(maxIndex);
 }
 
-SnakeGame.prototype.renderBoardItems = function() {
-  this.board.render(this.snake);
+SnakeGame.prototype.checkForCollisions = function() {
+  if (this.appleCollection.appleAtCoordinate(this.snake.coordinates[0])) {
+    console.log('snake eats apple!');
+  }
 }
 
-},{"./board.js":1,"./directions.js":2,"./snake.js":4}],4:[function(require,module,exports){
+SnakeGame.prototype.renderBoardItems = function() {
+  this.board.render(this.snake);
+  // NOTE: not necessary to re-render apples on each frame
+  this.board.render(this.appleCollection);
+}
+
+},{"./apple-collection.js":1,"./board.js":2,"./directions.js":3,"./snake.js":5}],5:[function(require,module,exports){
 var Directions = require('./directions.js');
 
 var Snake = function() {
@@ -202,4 +243,4 @@ Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex)
 
 module.exports = Snake;
 
-},{"./directions.js":2}]},{},[3]);
+},{"./directions.js":3}]},{},[4]);

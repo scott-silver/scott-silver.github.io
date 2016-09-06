@@ -31,6 +31,11 @@
 .tile--black {
   background-color: #5d5d5d;
 }
+
+.tile--red {
+  background-color: red;
+}
+
 /*
 .row {
   height: 10px;

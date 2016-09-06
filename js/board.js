@@ -1,6 +1,7 @@
 TILE_CLASS = 'tile';
 TILE_GREY_CLASS = 'tile--grey';
 TILE_BLACK_CLASS = 'tile--black';
+TILE_RED_CLASS = 'tile--red';
 
 var Board = function(options) {
   this.dimension = 50;

@@ -1,6 +1,7 @@
 var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
+var AppleCollection = require('./apple-collection.js');
 
 STEP_INTERVAL = 70;
 
@@ -9,6 +10,7 @@ window.SnakeGame = function(element) {
     element: element
   });
   this.snake = new Snake();
+  this.appleCollection = new AppleCollection();
 }
 
 SnakeGame.prototype.setup = function() {
@@ -51,6 +53,7 @@ SnakeGame.prototype.start = function() {
 SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
+  this.checkForCollisions();
   this.renderBoardItems();
 }
 
@@ -59,6 +62,14 @@ SnakeGame.prototype.advanceBoardItems = function() {
   this.snake.advance(maxIndex);
 }
 
+SnakeGame.prototype.checkForCollisions = function() {
+  if (this.appleCollection.appleAtCoordinate(this.snake.coordinates[0])) {
+    console.log('snake eats apple!');
+  }
+}
+
 SnakeGame.prototype.renderBoardItems = function() {
   this.board.render(this.snake);
+  // NOTE: not necessary to re-render apples on each frame
+  this.board.render(this.appleCollection);
 }
