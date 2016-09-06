@@ -76,6 +76,7 @@ SnakeGame.prototype.checkForCollisions = function() {
   if (appleAtCoordinate) {
     this.appleCollection.removeApple(appleAtCoordinate);
     this.score++;
+    this.snake.growByOne();
   }
 }
 

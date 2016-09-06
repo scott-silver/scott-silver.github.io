@@ -194,6 +194,7 @@ SnakeGame.prototype.checkForCollisions = function() {
   if (appleAtCoordinate) {
     this.appleCollection.removeApple(appleAtCoordinate);
     this.score++;
+    this.snake.growByOne();
   }
 }
 
@@ -214,6 +215,7 @@ var Snake = function() {
     {x: 0, y: 1, color: 'grey'},
     {x: 0, y: 0, color: 'grey'}
   ];
+  this.length = this.coordinates.length;
 }
 
 Snake.prototype.changeDirection = function(direction) {
@@ -226,7 +228,13 @@ Snake.prototype.advance = function(maxIndex) {
   proposedCoordinate.color = 'black'
   var wrappedCoordinate = this.wrapCoordinateToBoardDimensions(proposedCoordinate, maxIndex);
   this.coordinates.unshift(wrappedCoordinate);
-  this.coordinates.pop();
+  if (this.coordinates.length > this.length) {
+    this.coordinates.pop();
+  }
+}
+
+Snake.prototype.growByOne = function() {
+  this.length++;
 }
 
 Snake.prototype.newCoordinateForDirection = function(direction) {
