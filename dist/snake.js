@@ -1,28 +1,20 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var AppleCollection = function() {
   this.coordinates = [
-    {
-      x: 10,
-      y: 10,
-      color: 'red'
-    },
-    {
-      x: 15,
-      y: 15,
-      color: 'red'
-    },
-    {
-      x: 20,
-      y: 20,
-      color: 'red'
-    }
+    { x: 10, y: 10, color: 'red' },
+    { x: 15, y: 15, color: 'red' },
+    { x: 20, y: 20, color: 'red' }
   ];
 }
 
 AppleCollection.prototype.appleAtCoordinate = function(coordinate) {
-  return this.coordinates.some(function(appleCoordinate) {
+  return this.coordinates.find(function(appleCoordinate) {
     return appleCoordinate.x == coordinate.x && appleCoordinate.y == coordinate.y;
   });
+}
+
+AppleCollection.prototype.removeApple = function(apple) {
+  this.coordinates.splice(this.coordinates.indexOf(apple), 1);
 }
 
 module.exports = AppleCollection;
@@ -56,13 +48,17 @@ Board.prototype.build = function() {
 }
 
 Board.prototype.clear = function() {
+  // Note: can be made more precise by taking a set of coordinates to clear
   // js array flattening: http://stackoverflow.com/a/10865042
   var tiles = [].concat.apply([], this.tiles).filter(function(tile) {
-    return tile.classList.contains(TILE_GREY_CLASS) || tile.classList.contains(TILE_BLACK_CLASS);
+    return tile.classList.contains(TILE_GREY_CLASS) ||
+           tile.classList.contains(TILE_BLACK_CLASS) ||
+           tile.classList.contains(TILE_RED_CLASS);
   });
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.remove(TILE_GREY_CLASS);
     tiles[i].classList.remove(TILE_BLACK_CLASS);
+    tiles[i].classList.remove(TILE_RED_CLASS);
   }
 }
 
@@ -165,15 +161,18 @@ SnakeGame.prototype.advanceBoardItems = function() {
 }
 
 SnakeGame.prototype.checkForCollisions = function() {
-  if (this.appleCollection.appleAtCoordinate(this.snake.coordinates[0])) {
+  var snakeHeadCoordinate = this.snake.coordinates[0];
+  var appleAtCoordinate = this.appleCollection.appleAtCoordinate(snakeHeadCoordinate);
+
+  if (appleAtCoordinate) {
+    this.appleCollection.removeApple(appleAtCoordinate);
     this.score++;
-    console.log(this.score);
   }
 }
 
 SnakeGame.prototype.renderBoardItems = function() {
   this.board.render(this.snake);
-  // NOTE: not necessary to re-render apples on each frame
+  // NOTE: may be possible not to re-render apples on each frame
   this.board.render(this.appleCollection);
 }
 

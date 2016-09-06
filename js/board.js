@@ -26,13 +26,17 @@ Board.prototype.build = function() {
 }
 
 Board.prototype.clear = function() {
+  // Note: can be made more precise by taking a set of coordinates to clear
   // js array flattening: http://stackoverflow.com/a/10865042
   var tiles = [].concat.apply([], this.tiles).filter(function(tile) {
-    return tile.classList.contains(TILE_GREY_CLASS) || tile.classList.contains(TILE_BLACK_CLASS);
+    return tile.classList.contains(TILE_GREY_CLASS) ||
+           tile.classList.contains(TILE_BLACK_CLASS) ||
+           tile.classList.contains(TILE_RED_CLASS);
   });
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].classList.remove(TILE_GREY_CLASS);
     tiles[i].classList.remove(TILE_BLACK_CLASS);
+    tiles[i].classList.remove(TILE_RED_CLASS);
   }
 }
 

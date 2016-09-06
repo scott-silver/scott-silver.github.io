@@ -64,14 +64,17 @@ SnakeGame.prototype.advanceBoardItems = function() {
 }
 
 SnakeGame.prototype.checkForCollisions = function() {
-  if (this.appleCollection.appleAtCoordinate(this.snake.coordinates[0])) {
+  var snakeHeadCoordinate = this.snake.coordinates[0];
+  var appleAtCoordinate = this.appleCollection.appleAtCoordinate(snakeHeadCoordinate);
+
+  if (appleAtCoordinate) {
+    this.appleCollection.removeApple(appleAtCoordinate);
     this.score++;
-    console.log(this.score);
   }
 }
 
 SnakeGame.prototype.renderBoardItems = function() {
   this.board.render(this.snake);
-  // NOTE: not necessary to re-render apples on each frame
+  // NOTE: may be possible not to re-render apples on each frame
   this.board.render(this.appleCollection);
 }
