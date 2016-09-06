@@ -17,6 +17,7 @@ SnakeGame.prototype.setup = function() {
   this.board.build();
   this.addEventListeners();
   this.addStartButton();
+  this.score = 0;
 }
 
 SnakeGame.prototype.addEventListeners = function() {
@@ -64,7 +65,8 @@ SnakeGame.prototype.advanceBoardItems = function() {
 
 SnakeGame.prototype.checkForCollisions = function() {
   if (this.appleCollection.appleAtCoordinate(this.snake.coordinates[0])) {
-    console.log('snake eats apple!');
+    this.score++;
+    console.log(this.score);
   }
 }
 
