@@ -265,18 +265,10 @@ Snake.prototype.newCoordinateForDirection = function(direction) {
 }
 
 Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex) {
-  if (coordinate.x > maxIndex) {
-    coordinate.x = 0;
-  }
-  if (coordinate.x < 0) {
-    coordinate.x = maxIndex;
-  }
-  if (coordinate.y > maxIndex) {
-    coordinate.y = 0;
-  }
-  if (coordinate.y < 0) {
-    coordinate.y = maxIndex;
-  }
+  if (coordinate.x > maxIndex) { coordinate.x = 0; };
+  if (coordinate.x < 0) { coordinate.x = maxIndex; };
+  if (coordinate.y > maxIndex) { coordinate.y = 0; };
+  if (coordinate.y < 0) { coordinate.y = maxIndex; };
   return coordinate;
 }
 
