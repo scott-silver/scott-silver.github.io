@@ -169,14 +169,15 @@ SnakeGame.prototype.addStartButton = function() {
 }
 
 SnakeGame.prototype.start = function() {
-  setInterval(this.step.bind(this), STEP_INTERVAL);
+  this.gameLoop = setInterval(this.step.bind(this), STEP_INTERVAL);
 }
 
 SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
   if (this.snake.isBitingSelf()) {
-    console.log('biting self!');
+    this.renderBoardItems();
+    return this.endGame();
   }
   this.checkForEatenApples();
   if (this.appleCollection.coordinates.length == 0) {
@@ -205,6 +206,10 @@ SnakeGame.prototype.renderBoardItems = function() {
   this.board.render(this.snake);
   // NOTE: may be possible not to re-render apples on each frame
   this.board.render(this.appleCollection);
+}
+
+SnakeGame.prototype.endGame = function() {
+  clearInterval(this.gameLoop);
 }
 
 },{"./apple-collection.js":1,"./board.js":2,"./directions.js":3,"./snake.js":5}],5:[function(require,module,exports){
