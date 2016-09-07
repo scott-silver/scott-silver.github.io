@@ -105,6 +105,18 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
   this.tiles[y][x].classList.add(className);
 }
 
+Board.prototype.displayEndScreen = function(score) {
+  var endScreen = document.createElement('div');
+  endScreen.classList.add('message-box');
+  var header = document.createElement('h2');
+  header.innerHTML = 'Score:';
+  endScreen.appendChild(header);
+  var scoreDisplay = document.createElement('div');
+  scoreDisplay.innerHTML = score;
+  endScreen.appendChild(scoreDisplay);
+  this.element.appendChild(endScreen);
+}
+
 module.exports = Board;
 
 },{}],3:[function(require,module,exports){
@@ -210,6 +222,7 @@ SnakeGame.prototype.renderBoardItems = function() {
 
 SnakeGame.prototype.endGame = function() {
   clearInterval(this.gameLoop);
+  this.board.displayEndScreen(this.score);
 }
 
 },{"./apple-collection.js":1,"./board.js":2,"./directions.js":3,"./snake.js":5}],5:[function(require,module,exports){
