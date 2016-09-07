@@ -24,6 +24,10 @@
   border:1px solid rgb(238, 238, 238);
 }
 
+.tile--red {
+  background-color: red;
+}
+
 .tile--grey {
   background-color: grey;
 }
@@ -32,9 +36,6 @@
   background-color: #5d5d5d;
 }
 
-.tile--red {
-  background-color: red;
-}
 
 /*
 .row {
