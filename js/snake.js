@@ -70,4 +70,12 @@ Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex)
   return coordinate;
 }
 
+Snake.prototype.isBitingSelf = function() {
+  var headCoordinate = this.coordinates[0];
+  var bodyCoordinates = this.coordinates.slice(1, this.coordinates.length);
+  return bodyCoordinates.some(function(bodyCoordinate) {
+    return bodyCoordinate.x == headCoordinate.x && bodyCoordinate.y == headCoordinate.y;
+  });
+}
+
 module.exports = Snake;

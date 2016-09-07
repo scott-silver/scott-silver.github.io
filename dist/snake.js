@@ -175,7 +175,10 @@ SnakeGame.prototype.start = function() {
 SnakeGame.prototype.step = function() {
   this.board.clear();
   this.advanceBoardItems();
-  this.checkForCollisions();
+  if (this.snake.isBitingSelf()) {
+    console.log('biting self!');
+  }
+  this.checkForEatenApples();
   if (this.appleCollection.coordinates.length == 0) {
     this.appleCollection.generateRandomApples();
   }
@@ -187,7 +190,7 @@ SnakeGame.prototype.advanceBoardItems = function() {
   this.snake.advance(maxIndex);
 }
 
-SnakeGame.prototype.checkForCollisions = function() {
+SnakeGame.prototype.checkForEatenApples = function() {
   var snakeHeadCoordinate = this.snake.coordinates[0];
   var appleAtCoordinate = this.appleCollection.appleAtCoordinate(snakeHeadCoordinate);
 
@@ -275,6 +278,14 @@ Snake.prototype.wrapCoordinateToBoardDimensions = function(coordinate, maxIndex)
     coordinate.y = maxIndex;
   }
   return coordinate;
+}
+
+Snake.prototype.isBitingSelf = function() {
+  var headCoordinate = this.coordinates[0];
+  var bodyCoordinates = this.coordinates.slice(1, this.coordinates.length);
+  return bodyCoordinates.some(function(bodyCoordinate) {
+    return bodyCoordinate.x == headCoordinate.x && bodyCoordinate.y == headCoordinate.y;
+  });
 }
 
 module.exports = Snake;
