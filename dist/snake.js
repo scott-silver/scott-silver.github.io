@@ -240,7 +240,20 @@ var Snake = function() {
 }
 
 Snake.prototype.changeDirection = function(direction) {
-  this.direction = direction;
+  if (this._isValidDirectionChange(direction)) {
+    this.direction = direction;
+  }
+}
+
+Snake.prototype._isValidDirectionChange = function(direction) {
+  switch (this.direction) {
+    case Directions.NORTH: // fall-through
+    case Directions.SOUTH:
+      return [Directions.EAST, Directions.WEST].indexOf(direction) >= 0;
+    case Directions.EAST: //fall-through
+    case Directions.WEST:
+      return [Directions.NORTH, Directions.SOUTH].indexOf(direction) >= 0;
+  }
 }
 
 Snake.prototype.advance = function(maxIndex) {
