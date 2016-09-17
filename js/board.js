@@ -62,15 +62,19 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
   this.tiles[y][x].classList.add(className);
 }
 
-Board.prototype.displayEndScreen = function(score) {
+Board.prototype.displayEndScreen = function(options) {
   var endScreen = document.createElement('div');
   endScreen.classList.add('message-box');
   var header = document.createElement('h2');
-  header.innerHTML = 'Score:';
+  header.innerHTML = 'Congrats!';
   endScreen.appendChild(header);
   var scoreDisplay = document.createElement('div');
-  scoreDisplay.innerHTML = score;
+  scoreDisplay.innerHTML = 'You ate ' + options.score + ' apples';
   endScreen.appendChild(scoreDisplay);
+  var restartButton = document.createElement('button');
+  restartButton.innerHTML = 'Play Again?';
+  restartButton.onclick = options.buttonCallback;
+  endScreen.appendChild(restartButton);
   this.element.appendChild(endScreen);
 }
 

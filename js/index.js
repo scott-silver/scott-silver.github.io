@@ -92,5 +92,12 @@ SnakeGame.prototype.renderBoardItems = function() {
 
 SnakeGame.prototype.endGame = function() {
   clearInterval(this.gameLoop);
-  this.board.displayEndScreen(this.score);
+  this.board.displayEndScreen({
+    score: this.score,
+    buttonCallback: this.restart.bind(this)
+  });
+}
+
+SnakeGame.prototype.restart = function() {
+  console.log('restart!');
 }
