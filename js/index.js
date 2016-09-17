@@ -10,17 +10,26 @@ window.SnakeGame = function(element) {
   this.board = new Board({
     element: element
   });
-  this.snake = new Snake();
-  this.appleCollection = new AppleCollection({
-    maxIndex: BOARD_DIMENSION - 1
-  });
 }
 
 SnakeGame.prototype.setup = function() {
   this.board.build();
-  this.addEventListeners();
   this.addStartButton();
+}
+
+SnakeGame.prototype.addStartButton = function() {
+  this.board.addStartButton(this.start.bind(this));
+}
+
+SnakeGame.prototype.start = function() {
   this.score = 0;
+  this.snake = new Snake();
+  this.appleCollection = new AppleCollection({
+    maxIndex: BOARD_DIMENSION - 1
+  });
+  this.addEventListeners();
+
+  this.gameLoop = setInterval(this.step.bind(this), STEP_INTERVAL);
 }
 
 SnakeGame.prototype.addEventListeners = function() {
@@ -44,14 +53,6 @@ SnakeGame.prototype.addEventListeners = function() {
         break;
     }
   }.bind(this));
-}
-
-SnakeGame.prototype.addStartButton = function() {
-  this.board.addStartButton(this.start.bind(this));
-}
-
-SnakeGame.prototype.start = function() {
-  this.gameLoop = setInterval(this.step.bind(this), STEP_INTERVAL);
 }
 
 SnakeGame.prototype.step = function() {
@@ -99,5 +100,6 @@ SnakeGame.prototype.endGame = function() {
 }
 
 SnakeGame.prototype.restart = function() {
-  console.log('restart!');
+  this.board.hideEndScreen();
+  this.start();
 }

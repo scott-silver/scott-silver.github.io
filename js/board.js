@@ -63,19 +63,23 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
 }
 
 Board.prototype.displayEndScreen = function(options) {
-  var endScreen = document.createElement('div');
-  endScreen.classList.add('message-box');
+  this.endScreen = document.createElement('div');
+  this.endScreen.classList.add('message-box');
   var header = document.createElement('h2');
   header.innerHTML = 'Congrats!';
-  endScreen.appendChild(header);
+  this.endScreen.appendChild(header);
   var scoreDisplay = document.createElement('div');
   scoreDisplay.innerHTML = 'You ate ' + options.score + ' apples';
-  endScreen.appendChild(scoreDisplay);
+  this.endScreen.appendChild(scoreDisplay);
   var restartButton = document.createElement('button');
   restartButton.innerHTML = 'Play Again?';
   restartButton.onclick = options.buttonCallback;
-  endScreen.appendChild(restartButton);
-  this.element.appendChild(endScreen);
+  this.endScreen.appendChild(restartButton);
+  this.element.appendChild(this.endScreen);
+}
+
+Board.prototype.hideEndScreen = function() {
+  this.element.removeChild(this.endScreen);
 }
 
 module.exports = Board;
