@@ -92,6 +92,7 @@ Board.prototype.addStartButton = function(startFunction) {
     startFunction();
   }
   this.element.appendChild(button);
+  button.focus();
 }
 
 Board.prototype.render = function(renderableObject) {
@@ -119,6 +120,7 @@ Board.prototype.displayEndScreen = function(options) {
   restartButton.onclick = options.buttonCallback;
   this.endScreen.appendChild(restartButton);
   this.element.appendChild(this.endScreen);
+  restartButton.focus();
 }
 
 Board.prototype.hideEndScreen = function() {
