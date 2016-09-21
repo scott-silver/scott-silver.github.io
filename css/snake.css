@@ -52,6 +52,13 @@
 }
 */
 
+.button {
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #ece7e7;
+  cursor: pointer;
+}
+
 .start-button {
   position: absolute;
   top: 50%;
@@ -60,13 +67,16 @@
   height: 40px;
   margin-left: -50px;
   margin-top: -20px;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid #ece7e7;
-  cursor: pointer;
+}
+
+.restart-button {
+  width: 100px;
+  height: 40px;
+  margin-top: 20px;
 }
 
 .message-box {
+  box-sizing: border-box;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -74,6 +84,7 @@
   height: 200px;
   margin-left: -100px;
   margin-top: -100px;
+  padding-top: 20px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   border: 1px solid #ece7e7;

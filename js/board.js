@@ -43,6 +43,7 @@ Board.prototype.clear = function() {
 Board.prototype.addStartButton = function(startFunction) {
   var button = document.createElement('button');
   button.classList.add('start-button');
+  button.classList.add('button');
   button.innerHTML = "Start";
   button.onclick = function() {
     button.parentElement.removeChild(button);
@@ -73,6 +74,8 @@ Board.prototype.displayEndScreen = function(options) {
   scoreDisplay.innerHTML = 'You ate ' + options.score + ' apples';
   this.endScreen.appendChild(scoreDisplay);
   var restartButton = document.createElement('button');
+  restartButton.classList.add('button');
+  restartButton.classList.add('restart-button');
   restartButton.innerHTML = 'Play Again?';
   restartButton.onclick = options.buttonCallback;
   this.endScreen.appendChild(restartButton);
