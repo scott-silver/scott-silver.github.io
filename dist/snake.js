@@ -145,6 +145,7 @@ var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
 var AppleCollection = require('./apple-collection.js');
+var ScoreKeeper = require('./score-keeper.js');
 
 STEP_INTERVAL = 70;
 BOARD_DIMENSION = 50;
@@ -153,6 +154,7 @@ window.SnakeGame = function(element) {
   this.board = new Board({
     element: element
   });
+  this.scoreKeeper = new ScoreKeeper();
 }
 
 SnakeGame.prototype.setup = function() {
@@ -236,6 +238,7 @@ SnakeGame.prototype.renderBoardItems = function() {
 
 SnakeGame.prototype.endGame = function() {
   clearInterval(this.gameLoop);
+  this.scoreKeeper.saveScore(this.score);
   this.board.displayEndScreen({
     score: this.score,
     buttonCallback: this.restart.bind(this)
@@ -247,7 +250,16 @@ SnakeGame.prototype.restart = function() {
   this.start();
 }
 
-},{"./apple-collection.js":1,"./board.js":2,"./directions.js":3,"./snake.js":5}],5:[function(require,module,exports){
+},{"./apple-collection.js":1,"./board.js":2,"./directions.js":3,"./score-keeper.js":5,"./snake.js":6}],5:[function(require,module,exports){
+var ScoreKeeper = function() {}
+
+ScoreKeeper.prototype.saveScore = function(score) {
+  window.localStorage.setItem(Date.now(), score);
+}
+
+module.exports = ScoreKeeper;
+
+},{}],6:[function(require,module,exports){
 var Directions = require('./directions.js');
 
 var Snake = function() {

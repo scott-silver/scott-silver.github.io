@@ -2,6 +2,7 @@ var Board = require('./board.js');
 var Snake = require('./snake.js');
 var Directions = require('./directions.js');
 var AppleCollection = require('./apple-collection.js');
+var ScoreKeeper = require('./score-keeper.js');
 
 STEP_INTERVAL = 70;
 BOARD_DIMENSION = 50;
@@ -10,6 +11,7 @@ window.SnakeGame = function(element) {
   this.board = new Board({
     element: element
   });
+  this.scoreKeeper = new ScoreKeeper();
 }
 
 SnakeGame.prototype.setup = function() {
@@ -93,6 +95,7 @@ SnakeGame.prototype.renderBoardItems = function() {
 
 SnakeGame.prototype.endGame = function() {
   clearInterval(this.gameLoop);
+  this.scoreKeeper.saveScore(this.score);
   this.board.displayEndScreen({
     score: this.score,
     buttonCallback: this.restart.bind(this)
