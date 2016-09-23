@@ -72,7 +72,8 @@
 .restart-button {
   width: 100px;
   height: 40px;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .message-box {
@@ -80,12 +81,40 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
-  height: 200px;
-  margin-left: -100px;
-  margin-top: -100px;
+  width: 400px;
+  height: 400px;
+  margin-left: -200px;
+  margin-top: -200px;
   padding-top: 20px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   border: 1px solid #ece7e7;
+}
+
+dl.top-scores {
+  border: 3px double #ccc;
+  padding: 0.5em;
+  max-width: 200px;
+  max-height: 200px;
+  border: 1px solid #ece7e7;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-align: right;
+  overflow: scroll;
+}
+
+.top-scores dt {
+  float: left;
+  clear: left;
+  text-align: right;
+  font-weight: bold;
+}
+
+.top-scores dt:after {
+  content: ":";
+}
+
+.top-scores dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 1px 0;
 }

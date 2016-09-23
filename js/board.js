@@ -3,6 +3,18 @@ TILE_GREY_CLASS = 'tile--grey';
 TILE_BLACK_CLASS = 'tile--black';
 TILE_RED_CLASS = 'tile--red';
 
+function buildElement(type, options) {
+  var element = document.createElement(type);
+  options = options || {};
+  if (options.classes) {
+    element.className = options.classes;
+  }
+  if (options.innerHTML) {
+    element.innerHTML = options.innerHTML;
+  }
+  return element;
+}
+
 var Board = function(options) {
   this.dimension = 50;
   this.element = options.element;
@@ -41,10 +53,7 @@ Board.prototype.clear = function() {
 }
 
 Board.prototype.addStartButton = function(startFunction) {
-  var button = document.createElement('button');
-  button.classList.add('start-button');
-  button.classList.add('button');
-  button.innerHTML = "Start";
+  var button = buildElement('button', {classes: 'start-button button', innerHTML: 'Start!'});
   button.onclick = function() {
     button.parentElement.removeChild(button);
     startFunction();
@@ -65,20 +74,26 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
 }
 
 Board.prototype.displayEndScreen = function(options) {
-  this.endScreen = document.createElement('div');
-  this.endScreen.classList.add('message-box');
-  var header = document.createElement('h2');
-  header.innerHTML = 'Congrats!';
+  this.endScreen = buildElement('div', {classes: 'message-box'});
+  var header = buildElement('div', {innerHTML: 'Congrats!'});
   this.endScreen.appendChild(header);
-  var scoreDisplay = document.createElement('div');
-  scoreDisplay.innerHTML = 'You ate ' + options.score + ' apples';
+  var scoreDisplay = buildElement('div', {innerHTML: 'You ate ' + options.score + ' apples'});
   this.endScreen.appendChild(scoreDisplay);
-  var restartButton = document.createElement('button');
-  restartButton.classList.add('button');
-  restartButton.classList.add('restart-button');
-  restartButton.innerHTML = 'Play Again?';
+  var restartButton = buildElement('button',
+                                   {classes: 'button restart-button', innerHTML: 'Play Again?'});
   restartButton.onclick = options.buttonCallback;
   this.endScreen.appendChild(restartButton);
+  var topScoresHeader = buildElement('div', {innerHTML: 'Top Scores:'});
+  this.endScreen.appendChild(topScoresHeader);
+  var topScores = buildElement('dl');
+  topScores.classList.add('top-scores');
+  for (var i = 0; i < 10; i++) {
+    var date = buildElement('dt', {innerHTML: new Date(options.topScores[i].date).toDateString()});
+    var score = buildElement('dd', {innerHTML: options.topScores[i].score});
+    topScores.appendChild(date);
+    topScores.appendChild(score);
+  }
+  this.endScreen.appendChild(topScores);
   this.element.appendChild(this.endScreen);
   restartButton.focus();
 }

@@ -98,6 +98,7 @@ SnakeGame.prototype.endGame = function() {
   this.scoreKeeper.saveScore(this.score);
   this.board.displayEndScreen({
     score: this.score,
+    topScores: this.scoreKeeper.getScores(),
     buttonCallback: this.restart.bind(this)
   });
 }
