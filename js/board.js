@@ -12,6 +12,11 @@ function buildElement(type, options) {
   if (options.innerHTML) {
     element.innerHTML = options.innerHTML;
   }
+  if (options.children) {
+    options.children.forEach(function(child) {
+      element.appendChild(child);
+    });
+  }
   return element;
 }
 
@@ -74,26 +79,27 @@ Board.prototype.addClassToCoordinate = function(x, y, className) {
 }
 
 Board.prototype.displayEndScreen = function(options) {
-  this.endScreen = buildElement('div', {classes: 'message-box'});
-  var header = buildElement('div', {innerHTML: 'Congrats!'});
-  this.endScreen.appendChild(header);
-  var scoreDisplay = buildElement('div', {innerHTML: 'You ate ' + options.score + ' apples'});
-  this.endScreen.appendChild(scoreDisplay);
   var restartButton = buildElement('button',
                                    {classes: 'button restart-button', innerHTML: 'Play Again?'});
   restartButton.onclick = options.buttonCallback;
-  this.endScreen.appendChild(restartButton);
-  var topScoresHeader = buildElement('div', {innerHTML: 'Top Scores:'});
-  this.endScreen.appendChild(topScoresHeader);
-  var topScores = buildElement('dl');
-  topScores.classList.add('top-scores');
+  var topScores = buildElement('dl', {classes: 'top-scores'});
   for (var i = 0; i < 10; i++) {
     var date = buildElement('dt', {innerHTML: new Date(options.topScores[i].date).toDateString()});
     var score = buildElement('dd', {innerHTML: options.topScores[i].score});
     topScores.appendChild(date);
     topScores.appendChild(score);
   }
-  this.endScreen.appendChild(topScores);
+  this.endScreen = buildElement('div',
+                                {
+                                  classes: 'message-box',
+                                  children: [
+                                    buildElement('div',
+                                                 {innerHTML: 'Your score: ' + options.score}),
+                                    buildElement('div', {innerHTML: 'Top Scores:'}),
+                                    topScores,
+                                    restartButton
+                                  ]
+                                });
   this.element.appendChild(this.endScreen);
   restartButton.focus();
 }

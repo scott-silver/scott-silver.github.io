@@ -73,7 +73,6 @@
   width: 100px;
   height: 40px;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .message-box {
@@ -97,8 +96,7 @@ dl.top-scores {
   max-width: 200px;
   max-height: 200px;
   border: 1px solid #ece7e7;
-  margin: 0 auto;
-  margin-top: 10px;
+  margin: 20px auto;
   text-align: right;
   overflow: scroll;
 }
