@@ -19,5 +19,8 @@
   "homepage": "https://github.com/scott-silver/scott-silver.github.io#readme",
   "devDependencies": {
     "browserify": "^13.1.0"
+  },
+  "dependencies": {
+    "moment": "^2.15.1"
   }
 }
