@@ -83,7 +83,7 @@ Board.prototype.displayEndScreen = function(options) {
                                    {classes: 'button restart-button', innerHTML: 'Play Again?'});
   restartButton.onclick = options.buttonCallback;
   var topScores = buildElement('dl', {classes: 'top-scores'});
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < options.topScores.length; i++) {
     var date = buildElement('dt', {innerHTML: options.topScores[i].dateString});
     var score = buildElement('dd', {innerHTML: options.topScores[i].score});
     topScores.appendChild(date);
